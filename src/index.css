@@ -54,3 +54,17 @@ h3 {
 tr:nth-child(odd) td {
 	background-color: #F0F0F0;
 }
+
+input,
+button,
+textarea {
+	font-size: 1rem;
+}
+
+button {
+	display: block;
+	margin: 1rem auto 0;
+	appearance: none;
+	padding: 0.5rem;
+	background: #F0F0F0;
+}
