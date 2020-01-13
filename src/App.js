@@ -1,0 +1,546 @@
+import React, { useState } from 'react'
+import './App.css'
+
+function PropsTable({ propDefs, editProp }) {
+  const [editingId, setEditingId] = useState(null)
+
+  if (!propDefs.length) {
+    return 'None'
+  }
+
+  return (
+    <table>
+      <tbody>
+        {propDefs.map(propDef => {
+          if (propDef.id === editingId) {
+            return (
+              <tr>
+                <td>
+                  <h3>Editing Prop</h3>
+                  <PropEditor
+                    prefilledValues={propDef}
+                    onSubmit={editedFields => {
+                      setEditingId(null)
+                      editProp(propDef.id, editedFields)
+                    }}
+                  />
+                </td>
+              </tr>
+            )
+          }
+
+          const { id, name, description, isRequired, notes, example } = propDef
+
+          return (
+            <tr>
+              <td>
+                <strong>{name}</strong>
+                <br />
+                <br />
+                {description}
+                <br />
+                <br />
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Is required</td>
+                      <td>{isRequired ? 'Yes' : 'No'}</td>
+                    </tr>
+                    <tr>
+                      <td>Notes</td>
+                      <td>{notes}</td>
+                    </tr>
+                    <tr>
+                      <td>Example</td>
+                      <td>{example}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <button
+                  onClick={() => {
+                    setEditingId(id)
+                  }}
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+function PropEditor({ prefilledValues, onSubmit }) {
+  const [fieldValues, setFieldValues] = useState(
+    prefilledValues || {
+      name: '',
+      description: '',
+      isRequired: false,
+      default: null,
+      notes: null,
+      example: null
+    }
+  )
+
+  const updateFieldValue = (name, value) =>
+    setFieldValues({ ...fieldValues, [name]: value })
+
+  return (
+    <form
+      onSubmit={e => {
+        onSubmit(fieldValues)
+        e.preventDefault()
+      }}
+    >
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td width="25%"></td>
+            <td width="50%"></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>
+              <small>The name of the prop.</small>
+            </td>
+            <td>
+              <input
+                type="text"
+                value={fieldValues.name}
+                onChange={e => updateFieldValue('name', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.name}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>
+              <small>Explain why it exists in one or two sentences max.</small>
+            </td>
+            <td>
+              <textarea
+                value={fieldValues.description}
+                onChange={e => updateFieldValue('description', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.description}</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>
+              <small>
+                Always required. One of these values (make sure you keep the
+                formatting). If a Flow type use code style. Use a pipe for
+                multiple types. Use React Component(s) not the Flow type. eg:
+                <ul>
+                  <li>Number</li>
+                  <li>String</li>
+                  <li>Boolean</li>
+                  <li>String | Number</li>
+                  <li>(someVal: number) => void</li>
+                  <li>See Types / MyTypeName React Component(s)</li>
+                </ul>
+              </small>
+            </td>
+            <td>
+              <input
+                type="text"
+                value={fieldValues.type}
+                onChange={e => updateFieldValue('type', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.type}</td>
+          </tr>
+          <tr>
+            <td>Is Required</td>
+            <td>
+              <small>Is it in the RequiredProps Flow type?</small>
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                checked={fieldValues.isRequired}
+                onChange={() =>
+                  updateFieldValue('isRequired', !fieldValues.isRequired)
+                }
+              />
+            </td>
+            <td>{fieldValues.isRequired ? 'Yes' : 'No'}</td>
+          </tr>
+          <tr>
+            <td>Default (if not required)</td>
+            <td>
+              <small>
+                Only for optional props. Use apostrophes for strings. If none
+                exists, use None.
+              </small>
+            </td>
+            <td>
+              <input
+                type="text"
+                value={fieldValues.default}
+                onChange={e => updateFieldValue('default', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.default}</td>
+          </tr>
+          <tr>
+            <td>Notes</td>
+            <td>
+              <small>
+                A short list of things the consumer should know before they use
+                it. eg. "if you do not provide enough array items it will throw
+                an error"
+              </small>
+            </td>
+            <td>
+              <textarea
+                value={fieldValues.notes}
+                onChange={e => updateFieldValue('notes', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.notes}</td>
+          </tr>
+          <tr>
+            <td>Example</td>
+            <td>
+              <small>Help the consumer quickly use the prop.</small>
+            </td>
+            <td>
+              <textarea
+                value={fieldValues.example}
+                onChange={e => updateFieldValue('example', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.example}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit">Save</button>
+    </form>
+  )
+}
+
+function TypesTable({ typesDefs, editType }) {
+  const [editingId, setEditingId] = useState(null)
+
+  if (!typesDefs.length) {
+    return 'None'
+  }
+
+  return (
+    <table>
+      <tbody>
+        {typesDefs.map(typeDef => {
+          if (typeDef.id === editingId) {
+            return (
+              <tr>
+                <td>
+                  <h3>Editing Type</h3>
+                  <TypeEditor
+                    prefilledValues={typeDef}
+                    onSubmit={editedFields => {
+                      setEditingId(null)
+                      editType(typeDef.id, editedFields)
+                    }}
+                  />
+                </td>
+              </tr>
+            )
+          }
+
+          const { id, name, description, value } = typeDef
+
+          return (
+            <tr>
+              <td>
+                <strong>{name}</strong>
+                <br />
+                <br />
+                {description}
+                <br />
+                <br />
+                <code>{value}</code>
+                <br />
+                <button
+                  onClick={() => {
+                    setEditingId(id)
+                  }}
+                >
+                  Edit
+                </button>
+              </td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+function TypeEditor({ prefilledValues, onSubmit }) {
+  const [fieldValues, setFieldValues] = useState(
+    prefilledValues || {
+      name: '',
+      description: '',
+      value: ''
+    }
+  )
+
+  const updateFieldValue = (name, value) =>
+    setFieldValues({ ...fieldValues, [name]: value })
+
+  return (
+    <form
+      onSubmit={e => {
+        onSubmit(fieldValues)
+        e.preventDefault()
+      }}
+    >
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td width="25%"></td>
+            <td width="50%"></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>
+              <small>The name of the Flow type.</small>
+            </td>
+            <td>
+              <input
+                type="text"
+                value={fieldValues.name}
+                onChange={e => updateFieldValue('name', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.name}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>
+              <small>Explain why it exists in one or two sentences max.</small>
+            </td>
+            <td>
+              <textarea
+                value={fieldValues.description}
+                onChange={e => updateFieldValue('description', e.target.value)}
+              />
+            </td>
+            <td>{fieldValues.description}</td>
+          </tr>
+          <tr>
+            <td>Value</td>
+            <td></td>
+            <td>
+              <textarea
+                className="code"
+                value={fieldValues.value}
+                onChange={e => updateFieldValue('value', e.target.value)}
+              />
+            </td>
+            <td>
+              <code>{fieldValues.value}</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit">Save</button>
+    </form>
+  )
+}
+
+let fieldId = 0
+
+function App() {
+  const [aboutTab, setAboutTab] = useState({})
+  const [usageTab, setUsageTab] = useState({})
+  const [propDefs, setPropDefs] = useState([])
+  const [typesDefs, setTypesDefs] = useState([])
+  const [importedResult, setImportedResult] = useState(null)
+
+  const editAboutTab = (name, value) =>
+    setAboutTab(currentVal => ({
+      ...currentVal,
+      [name]: value
+    }))
+
+  const editUsageTab = (name, value) =>
+    setUsageTab(currentVal => ({
+      ...currentVal,
+      [name]: value
+    }))
+
+  const editProp = (id, newFields) => {
+    setPropDefs(currentVal =>
+      currentVal.map(propDef => {
+        if (propDef.id === id) {
+          return newFields
+        }
+        return newFields
+      })
+    )
+  }
+
+  const editType = (id, newFields) => {
+    setTypesDefs(currentVal =>
+      currentVal.map(propDef => {
+        if (propDef.id === id) {
+          return newFields
+        }
+        return newFields
+      })
+    )
+  }
+
+  return (
+    <div className="App">
+      <header>ZeroHeight Docs Generator</header>
+      <h2>About Tab</h2>
+      <h3>What is my component?</h3>
+      <p>
+        A short paragraph explaining what the component is and what it is used
+        for. Do not go into too much depth - just summarise it.
+      </p>
+      <p>
+        eg. This component is a radial guage. It displays a bar as a semi circle
+        and fills up depending on a percentage value.
+      </p>
+      <textarea
+        value={aboutTab.what}
+        onChange={e => editAboutTab('what', e.target.value)}
+      />
+      <h3>Why would I use this component?</h3>
+      <p>Explain why someone might consume your new component.</p>
+      <p>
+        eg. Use this component when you want to display your data as a gauge.
+      </p>
+      <textarea
+        value={aboutTab.why}
+        onChange={e => editAboutTab('why', e.target.value)}
+      />
+      <h3>What are the different types?</h3>
+      <p>
+        Does your component change functionality depending on a prop? What are
+        the common types?
+      </p>
+      <p>eg. expanded or contracted, full width or short width</p>
+      <textarea
+        value={aboutTab.types}
+        onChange={e => editAboutTab('types', e.target.value)}
+      />
+      <h3>What are the different states?</h3>
+      <p>
+        Does your component change appearance depending on a prop? What are the
+        common states?
+      </p>
+      <p>eg. enabled, disabled, erroneous, loading</p>
+      <textarea
+        value={aboutTab.states}
+        onChange={e => editAboutTab('states', e.target.value)}
+      />
+      <h2>Usage Tab</h2>
+      <h3>Import</h3>
+      <p>The 1 line of code to import your component as a consumer</p>
+      <p>
+        eg.{' '}
+        <code>{`import MyComponent from 'atomix/molecules/MyComponent'`}</code>
+      </p>
+      <textarea
+        className="code"
+        value={usageTab.import}
+        onChange={e => editUsageTab('import', e.target.value)}
+      />
+      <h3>Example</h3>
+      <p>
+        A minimal example of how to use the component. Similar to the sandbox
+        but even slimmer.
+      </p>
+      <p>
+        eg.{' '}
+        <code>{`import React, { useState } from 'react'
+import MyComponent from 'atomix/molecules/MyComponent'
+
+const MyExampleComponent = () => {
+  const [someState, setSomeState] = useState(false)
+
+  return <MyComponent something={someState} />
+}`}</code>
+      </p>
+      <textarea
+        className="code"
+        value={usageTab.example}
+        onChange={e => editUsageTab('example', e.target.value)}
+      />
+      <h2>Required Props</h2>
+      <PropsTable
+        propDefs={propDefs.filter(({ isRequired }) => isRequired)}
+        editProp={editProp}
+      />
+      <h2>Optional Props</h2>
+      <PropsTable
+        propDefs={propDefs.filter(({ isRequired }) => !isRequired)}
+        editProp={editProp}
+      />
+      <h2>Add Prop</h2>
+      <PropEditor
+        onSubmit={fields =>
+          setPropDefs(currentVal =>
+            currentVal.concat([{ ...fields, id: fieldId++ }])
+          )
+        }
+      />
+      <h2>Flow Types</h2>
+      <TypesTable typesDefs={typesDefs} editType={editType} />
+      <h2>Add Flow Type</h2>
+      <TypeEditor
+        onSubmit={fields =>
+          setTypesDefs(currentVal =>
+            currentVal.concat([{ ...fields, id: fieldId++ }])
+          )
+        }
+      />
+      <h2>Export</h2>
+      <textarea
+        value={JSON.stringify(
+          {
+            aboutTab,
+            usageTab,
+            props: propDefs,
+            types: typesDefs
+          },
+          '',
+          '\t'
+        )}
+      />
+      <h2>Import</h2>
+      <textarea onChange={e => setImportedResult(JSON.parse(e.target.value))} />
+      <button
+        onClick={() => {
+          if (!importedResult) return
+
+          setAboutTab(importedResult.aboutTab)
+          setUsageTab(importedResult.usageTab)
+          setPropDefs(importedResult.props)
+          setTypesDefs(importedResult.types)
+        }}
+      >
+        Apply
+      </button>
+    </div>
+  )
+}
+
+export default App
