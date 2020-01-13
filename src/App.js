@@ -29,7 +29,15 @@ function PropsTable({ propDefs, editProp }) {
             )
           }
 
-          const { id, name, description, isRequired, notes, example } = propDef
+          const {
+            id,
+            name,
+            description,
+            isRequired,
+            default: defaultValue,
+            notes,
+            example
+          } = propDef
 
           return (
             <tr>
@@ -45,6 +53,10 @@ function PropsTable({ propDefs, editProp }) {
                     <tr>
                       <td>Is required</td>
                       <td>{isRequired ? 'Yes' : 'No'}</td>
+                    </tr>
+                    <tr>
+                      <td>Default</td>
+                      <td>{defaultValue}</td>
                     </tr>
                     <tr>
                       <td>Notes</td>
@@ -161,7 +173,10 @@ function PropEditor({ prefilledValues, onSubmit }) {
           <tr>
             <td>Is Required</td>
             <td>
-              <small>Is it in the RequiredProps Flow type?</small>
+              <small>
+                Does the component error or misbehave if this prop isn't
+                provided?
+              </small>
             </td>
             <td>
               <input
@@ -175,12 +190,9 @@ function PropEditor({ prefilledValues, onSubmit }) {
             <td>{fieldValues.isRequired ? 'Yes' : 'No'}</td>
           </tr>
           <tr>
-            <td>Default (if not required)</td>
+            <td>Default</td>
             <td>
-              <small>
-                Only for optional props. Use apostrophes for strings. If none
-                exists, use None.
-              </small>
+              <small>Only for optional props. Can leave empty.</small>
             </td>
             <td>
               <input
@@ -195,9 +207,8 @@ function PropEditor({ prefilledValues, onSubmit }) {
             <td>Notes</td>
             <td>
               <small>
-                A short list of things the consumer should know before they use
-                it. eg. "if you do not provide enough array items it will throw
-                an error"
+                Things the consumer should know before they use it. eg. "if you
+                do not provide enough array items it will throw an error"
               </small>
             </td>
             <td>
@@ -211,7 +222,10 @@ function PropEditor({ prefilledValues, onSubmit }) {
           <tr>
             <td>Example</td>
             <td>
-              <small>Help the consumer quickly use the prop.</small>
+              <small>
+                Help the consumer quickly use the prop. eg. an example array of
+                items
+              </small>
             </td>
             <td>
               <textarea
@@ -408,6 +422,7 @@ function App() {
   return (
     <div className="App">
       <header>ZeroHeight Docs Generator</header>
+      <hr />
       <h2>About Tab</h2>
       <h3>What is my component?</h3>
       <p>
@@ -433,24 +448,23 @@ function App() {
       />
       <h3>What are the different types?</h3>
       <p>
-        Does your component change functionality depending on a prop? What are
-        the common types?
+        How does the component change functionality depending on props. For
+        example does the component collapse or expand.
       </p>
-      <p>eg. expanded or contracted, full width or short width</p>
       <textarea
         value={aboutTab.types}
         onChange={e => editAboutTab('types', e.target.value)}
       />
       <h3>What are the different states?</h3>
       <p>
-        Does your component change appearance depending on a prop? What are the
-        common states?
+        Does the component change functionality or appearance if the "state"
+        changes. eg. enabled, disabled, erroneous, loading
       </p>
-      <p>eg. enabled, disabled, erroneous, loading</p>
       <textarea
         value={aboutTab.states}
         onChange={e => editAboutTab('states', e.target.value)}
       />
+      <hr />
       <h2>Usage Tab</h2>
       <h3>Import</h3>
       <p>The 1 line of code to import your component as a consumer</p>
@@ -484,6 +498,7 @@ const MyExampleComponent = () => {
         value={usageTab.example}
         onChange={e => editUsageTab('example', e.target.value)}
       />
+      <hr />
       <h2>Required Props</h2>
       <PropsTable
         propDefs={propDefs.filter(({ isRequired }) => isRequired)}
@@ -502,6 +517,7 @@ const MyExampleComponent = () => {
           )
         }
       />
+      <hr />
       <h2>Flow Types</h2>
       <TypesTable typesDefs={typesDefs} editType={editType} />
       <h2>Add Flow Type</h2>
@@ -512,7 +528,13 @@ const MyExampleComponent = () => {
           )
         }
       />
+      <hr />
       <h2>Export</h2>
+      <p>
+        Export this JSON blob so other people can import it (eg. people
+        converting it for ZeroHeight).
+      </p>
+      <p>It automatically updates.</p>
       <textarea
         value={JSON.stringify(
           {
@@ -525,7 +547,9 @@ const MyExampleComponent = () => {
           '\t'
         )}
       />
+      <hr />
       <h2>Import</h2>
+      <p>Paste a JSON blob and it will fill in all of the fields above.</p>
       <textarea onChange={e => setImportedResult(JSON.parse(e.target.value))} />
       <button
         onClick={() => {

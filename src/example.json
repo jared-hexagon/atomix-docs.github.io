@@ -1,0 +1,42 @@
+{
+	"aboutTab": {
+		"what": "This is my component.\n\nYou use it in a special way. Isn't it sweet?",
+		"why": "Because it is a nice component.",
+		"types": "Expanded and contracted.",
+		"states": "Enabled and disabled."
+	},
+	"usageTab": {
+		"import": "import MyComponent from 'atomix/molecules/MyComponent'",
+		"example": "import React, { useState } from 'react'\nimport MyComponent from 'atomix/molecules/MyComponent'\n\nconst MyExampleComponent = () => {\n  const [someState, setSomeState] = useState(false)\n\n  return <MyComponent something={someState} />\n}"
+	},
+	"props": [
+		{
+			"name": "id",
+			"description": "A unique ID.",
+			"isRequired": true,
+			"default": null,
+			"notes": "Provided with the \"onClick\" callback.",
+			"example": "'5132'",
+			"type": "String",
+			"id": 0
+		},
+		{
+			"name": "onClick",
+			"description": "A function that is called when the component is clicked on.",
+			"isRequired": false,
+			"default": "() => null",
+			"notes": "",
+			"example": "(id: string) => alert(`You clicked on ${id}`)",
+			"type": "(id: string) => void",
+			"id": 1
+		}
+	],
+	"types": [
+		{
+			"name": "CallbackFn",
+			"description": "The callback function type.",
+			"value": "(id: string) => void",
+			"id": 2
+		}
+	]
+}
