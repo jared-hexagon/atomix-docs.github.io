@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
+import YAML from 'yaml'
 import './App.css'
 
 function PropsTable({ propDefs, editProp }) {
@@ -376,6 +377,30 @@ function TypeEditor({ prefilledValues, onSubmit }) {
   )
 }
 
+const formats = {
+  json: 'json',
+  yaml: 'yaml'
+}
+
+const FormatSelector = ({ selectedFormat, onChange }) => (
+  <Fragment>
+    <input
+      type="radio"
+      value={formats.json}
+      checked={selectedFormat === formats.json}
+      onChange={() => onChange(formats.json)}
+    />{' '}
+    JSON
+    <input
+      type="radio"
+      value={formats.yaml}
+      checked={selectedFormat === formats.yaml}
+      onChange={() => onChange(formats.yaml)}
+    />{' '}
+    YAML
+  </Fragment>
+)
+
 let fieldId = 0
 
 function App() {
@@ -383,7 +408,9 @@ function App() {
   const [usageTab, setUsageTab] = useState({})
   const [propDefs, setPropDefs] = useState([])
   const [typesDefs, setTypesDefs] = useState([])
-  const [importedResult, setImportedResult] = useState(null)
+  const [importedData, setImportedData] = useState(null)
+  const [importFormat, setImportFormat] = useState(formats.json)
+  const [exportFormat, setExportFormat] = useState(formats.json)
 
   const editAboutTab = (name, value) =>
     setAboutTab(currentVal => ({
@@ -417,6 +444,13 @@ function App() {
         return newFields
       })
     )
+  }
+
+  const exportData = {
+    aboutTab,
+    usageTab,
+    props: propDefs,
+    types: typesDefs
   }
 
   return (
@@ -535,25 +569,33 @@ const MyExampleComponent = () => {
         converting it for ZeroHeight).
       </p>
       <p>It automatically updates.</p>
+      <FormatSelector
+        onChange={setExportFormat}
+        selectedFormat={exportFormat}
+      />
       <textarea
-        value={JSON.stringify(
-          {
-            aboutTab,
-            usageTab,
-            props: propDefs,
-            types: typesDefs
-          },
-          '',
-          '\t'
-        )}
+        value={
+          exportFormat === formats.json
+            ? JSON.stringify(exportData, '', '\t')
+            : YAML.stringify(exportData)
+        }
       />
       <hr />
       <h2>Import</h2>
       <p>Paste a JSON blob and it will fill in all of the fields above.</p>
-      <textarea onChange={e => setImportedResult(JSON.parse(e.target.value))} />
+      <FormatSelector
+        onChange={setImportFormat}
+        selectedFormat={importFormat}
+      />
+      <textarea onChange={e => setImportedData(e.target.value)} />
       <button
         onClick={() => {
-          if (!importedResult) return
+          if (!importedData) return
+
+          const importedResult =
+            importFormat === formats.json
+              ? JSON.parse(importedData)
+              : YAML.parse(importedData)
 
           setAboutTab(importedResult.aboutTab)
           setUsageTab(importedResult.usageTab)
