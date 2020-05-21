@@ -408,6 +408,7 @@ function App() {
   const [usageTab, setUsageTab] = useState({})
   const [propDefs, setPropDefs] = useState([])
   const [typesDefs, setTypesDefs] = useState([])
+  const [compatibilityTab, setCompatibilityTab] = useState({})
   const [importedData, setImportedData] = useState(null)
   const [importFormat, setImportFormat] = useState(formats.json)
   const [exportFormat, setExportFormat] = useState(formats.json)
@@ -446,11 +447,18 @@ function App() {
     )
   }
 
+  const editCompatibilityTab = (name, value) =>
+    setCompatibilityTab(currentVal => ({
+      ...currentVal,
+      [name]: value
+    }))
+
   const exportData = {
     aboutTab,
     usageTab,
     props: propDefs,
-    types: typesDefs
+    types: typesDefs,
+    compatibilityTab
   }
 
   return (
@@ -563,6 +571,25 @@ const MyExampleComponent = () => {
         }
       />
       <hr />
+      <h2>Compatibility</h2>
+      <p>
+        What testing have you done in browsers and devices? We strongly
+        recommend you test on these browsers/devices:
+      </p>
+      <ul>
+        <li>Chrome (macOS or Windows)</li>
+        <li>Safari (macOS)</li>
+        <li>Firefox (macOS or Windows)</li>
+        <li>Edge (Windows - Chromium)</li>
+        <li>Chrome for Android</li>
+        <li>Safari (iOS)</li>
+      </ul>
+      <textarea
+        className="code"
+        value={compatibilityTab.value}
+        onChange={e => editCompatibilityTab('value', e.target.value)}
+      />
+      <hr />
       <h2>Export</h2>
       <p>
         Export this JSON blob so other people can import it (eg. people
@@ -601,6 +628,7 @@ const MyExampleComponent = () => {
           setUsageTab(importedResult.usageTab)
           setPropDefs(importedResult.props)
           setTypesDefs(importedResult.types)
+          setCompatibilityTab(importedResult.compatibilityTab)
         }}
       >
         Apply
