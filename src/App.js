@@ -401,6 +401,12 @@ const FormatSelector = ({ selectedFormat, onChange }) => (
   </Fragment>
 )
 
+function sortAlphabetically(arr) {
+  return arr.sort(({ name: nameA }, { name: nameB }) =>
+    nameA.localeCompare(nameB)
+  )
+}
+
 let fieldId = 0
 
 function App() {
@@ -427,23 +433,27 @@ function App() {
 
   const editProp = (id, newFields) => {
     setPropDefs(currentVal =>
-      currentVal.map(propDef => {
-        if (propDef.id === id) {
+      sortAlphabetically(
+        currentVal.map(propDef => {
+          if (propDef.id === id) {
+            return newFields
+          }
           return newFields
-        }
-        return newFields
-      })
+        })
+      )
     )
   }
 
   const editType = (id, newFields) => {
     setTypesDefs(currentVal =>
-      currentVal.map(propDef => {
-        if (propDef.id === id) {
+      sortAlphabetically(
+        currentVal.map(propDef => {
+          if (propDef.id === id) {
+            return newFields
+          }
           return newFields
-        }
-        return newFields
-      })
+        })
+      )
     )
   }
 
@@ -555,7 +565,9 @@ const MyExampleComponent = () => {
       <PropEditor
         onSubmit={fields =>
           setPropDefs(currentVal =>
-            currentVal.concat([{ ...fields, id: fieldId++ }])
+            sortAlphabetically(
+              currentVal.concat([{ ...fields, id: fieldId++ }])
+            )
           )
         }
       />
@@ -566,7 +578,9 @@ const MyExampleComponent = () => {
       <TypeEditor
         onSubmit={fields =>
           setTypesDefs(currentVal =>
-            currentVal.concat([{ ...fields, id: fieldId++ }])
+            sortAlphabetically(
+              currentVal.concat([{ ...fields, id: fieldId++ }])
+            )
           )
         }
       />
@@ -626,8 +640,8 @@ const MyExampleComponent = () => {
 
           setAboutTab(importedResult.aboutTab)
           setUsageTab(importedResult.usageTab)
-          setPropDefs(importedResult.props)
-          setTypesDefs(importedResult.types)
+          setPropDefs(sortAlphabetically(importedResult.props))
+          setTypesDefs(sortAlphabetically(importedResult.types))
           setCompatibilityTab(importedResult.compatibilityTab)
         }}
       >
