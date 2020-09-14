@@ -498,7 +498,7 @@ function App() {
         value={aboutTab.why}
         onChange={e => editAboutTab('why', e.target.value)}
       />
-      <h3>What are the different types?</h3>
+      <h3>What are the different states?</h3>
       <p>
         How does the component change functionality depending on props. For
         example does the component collapse or expand.
