@@ -503,6 +503,7 @@ function App() {
         How does the component change functionality depending on props. For
         example does the component collapse or expand.
       </p>
+      <strong>Required!!!!</strong>
       <textarea
         value={aboutTab.types}
         onChange={e => editAboutTab('types', e.target.value)}
