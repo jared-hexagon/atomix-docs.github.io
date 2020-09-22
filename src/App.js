@@ -489,9 +489,9 @@ function App() {
         onChange={e => editAboutTab('what', e.target.value)}
       />
       <h3>Why would I use this component?</h3>
-      <p>Explain why someone might consume your new component.</p>
+      <p>Explain why and when someone might consume your new component.</p>
       <p>
-        eg. Use this component when you want to display your data as a gauge.
+        eg. Checkbox should be used in cases where multiple selection is the most obvious use case. In use cases where only one selection of a group is allowed, use the radio button component instead of the checkbox.
       </p>
       <textarea
         value={aboutTab.why}
