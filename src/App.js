@@ -611,14 +611,15 @@ const MyExampleComponent = () => {
         <ul>
         <li>Chrome 22.44.10 for Windows</li>
         <li>Safari 33.4 for macOS</li>
-        <li>Firefox (macOS or Windows)</li>
-        <li>Edge (Windows - Chromium)</li>
-        <li>Chrome for Android</li>
-        <li>Safari (iOS)</li>
+        <li>Firefox 44.54 for macOS and Windows</li>
       </ul>
-        
-        
-        
+        Compatibility:
+        <ul>
+        <li>Desktop</li>
+        <li>Tablet</li>
+        <li>Mobile</li>
+        </ul>
+       
       </p>
       <textarea
         className="code"
