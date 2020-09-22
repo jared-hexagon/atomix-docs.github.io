@@ -497,10 +497,13 @@ function App() {
         value={aboutTab.why}
         onChange={e => editAboutTab('why', e.target.value)}
       />
-      <h3>What are the different states?</h3>
+      <h3>What are the different types?</h3>
       <p>
         How does the component change functionality depending on props. For
         example does the component collapse or expand.
+      </p>
+      <p>
+        eg. The checkbox has 2 style types, Round box and Square box.
       </p>
       <strong>Required!!!!</strong>
       <textarea
@@ -510,7 +513,7 @@ function App() {
       <h3>What are the different states?</h3>
       <p>
         Does the component change functionality or appearance if the "state"
-        changes. eg. enabled, disabled, erroneous, loading
+        changes. eg. The checkbox component has different states: default, enabled, disabled, erroneous, loading
       </p>
       <textarea
         value={aboutTab.states}
@@ -598,6 +601,9 @@ const MyExampleComponent = () => {
         <li>Chrome for Android</li>
         <li>Safari (iOS)</li>
       </ul>
+      <p>
+        When listing the tests dont forget to specify the version tested. eg. Chrome 22.44 for Windows
+      </p>
       <textarea
         className="code"
         value={compatibilityTab.value}
