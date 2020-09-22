@@ -604,7 +604,8 @@ const MyExampleComponent = () => {
         <li>Safari (iOS)</li>
       </ul>
       <p>
-        When listing the tests dont forget to specify the version tested.
+        List only the ones you have tested and dont forget to specify the version tested.
+        An example is shown below.
       </p>
       <p>
         Tested on:
