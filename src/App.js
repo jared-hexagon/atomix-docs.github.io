@@ -499,8 +499,7 @@ function App() {
       />
       <h3>What are the different types?</h3>
       <p>
-        How does the component change functionality depending on props. For
-        example does the component collapse or expand.
+        How does the component change functionality depending on props.
       </p>
       <p>
         eg. The checkbox has 2 style types, Round box and Square box.
@@ -608,7 +607,18 @@ const MyExampleComponent = () => {
         When listing the tests dont forget to specify the version tested.
       </p>
       <p>
-        eg. Chrome 22.44 for Windows
+        Tested on:
+        <ul>
+        <li>Chrome 22.44.10 for Windows</li>
+        <li>Safari 33.4 for macOS</li>
+        <li>Firefox (macOS or Windows)</li>
+        <li>Edge (Windows - Chromium)</li>
+        <li>Chrome for Android</li>
+        <li>Safari (iOS)</li>
+      </ul>
+        
+        
+        
       </p>
       <textarea
         className="code"
