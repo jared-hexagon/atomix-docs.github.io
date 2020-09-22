@@ -605,7 +605,10 @@ const MyExampleComponent = () => {
         <li>Safari (iOS)</li>
       </ul>
       <p>
-        When listing the tests dont forget to specify the version tested. eg. Chrome 22.44 for Windows
+        When listing the tests dont forget to specify the version tested.
+      </p>
+      <p>
+        eg. Chrome 22.44 for Windows
       </p>
       <textarea
         className="code"
