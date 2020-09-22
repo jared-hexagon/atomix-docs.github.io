@@ -474,6 +474,7 @@ function App() {
   return (
     <div className="App">
       <header>ZeroHeight Docs Generator</header>
+      <br>
       <strong> NOTE:  </strong> When in doubt consult the current <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for reference.
       <hr />
       <h2>About Tab</h2>
