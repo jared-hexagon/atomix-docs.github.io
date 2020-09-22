@@ -513,7 +513,10 @@ function App() {
       <h3>What are the different states?</h3>
       <p>
         Does the component change functionality or appearance if the "state"
-        changes. eg. The checkbox component has different states: default, enabled, disabled, erroneous, loading
+        changes.
+      </p>
+      <p>
+        eg. The checkbox component has different states: default, enabled, disabled, erroneous, loading
       </p>
       <textarea
         value={aboutTab.states}
