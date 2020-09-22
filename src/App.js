@@ -474,8 +474,8 @@ function App() {
   return (
     <div className="App">
       <header>ZeroHeight Docs Generator</header>
+      <strong> NOTE:  </strong> When in doubt consult the current <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for reference.
       <hr />
-    <strong> NOTE:  </strong> When in doubt consult the current <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for reference.
       <h2>About Tab</h2>
       <h3>What is my component?</h3>
       <p>
