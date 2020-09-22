@@ -475,6 +475,9 @@ function App() {
     <div className="App">
       <header>ZeroHeight Docs Generator</header>
       <hr />
+    <strong>
+    https://atomix.hexagonmining.com/
+    </strong>
       <h2>About Tab</h2>
       <h3>What is my component?</h3>
       <p>
