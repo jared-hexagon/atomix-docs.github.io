@@ -476,7 +476,7 @@ function App() {
       <header>ZeroHeight Docs Generator</header>
       <hr />
     <strong>
-    https://atomix.hexagonmining.com/
+    When in doubt consult the current [Atomix documentation](https://atomix.hexagonmining.com/) for reference.
     </strong>
       <h2>About Tab</h2>
       <h3>What is my component?</h3>
