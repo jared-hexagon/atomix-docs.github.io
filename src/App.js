@@ -506,7 +506,6 @@ function App() {
       <p>
         eg. The checkbox has 2 style types, Round box and Square box.
       </p>
-      <strong>Required!!!!</strong>
       <textarea
         value={aboutTab.types}
         onChange={e => editAboutTab('types', e.target.value)}
