@@ -482,8 +482,7 @@ function App() {
         for. Do not go into too much depth - just summarise it.
       </p>
       <p>
-        eg. This component is a radial guage. It displays a bar as a semi circle
-        and fills up depending on a percentage value.
+        eg. Checkbox is a interactive box that, when selected by the user, shows that a particular feature has been enabled or a particular option chosen.
       </p>
       <textarea
         value={aboutTab.what}
