@@ -478,7 +478,7 @@ function App() {
       <strong> NOTE:  </strong> When in doubt consult the current <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for reference.
       <hr />
       <h2>About Tab</h2>
-      <h3>What is my component?</h3>
+      <h3>(Required) What is my component?</h3>
       <p>
         A short paragraph explaining what the component is and what it is used
         for. Do not go into too much depth - just summarise it.
@@ -490,7 +490,7 @@ function App() {
         value={aboutTab.what}
         onChange={e => editAboutTab('what', e.target.value)}
       />
-      <h3>Why would I use this component?</h3>
+      <h3>(Required) Why would I use this component?</h3>
       <p>Explain why and when someone might consume your new component.</p>
       <p>
         eg. Checkbox should be used in cases where multiple selection is the most obvious use case. In use cases where only one selection of a group is allowed, use the radio button component instead of the checkbox.
