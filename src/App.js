@@ -591,7 +591,7 @@ const MyExampleComponent = () => {
         }
       />
       <hr />
-      <h2>Compatibility</h2>
+      <h2>(Required) Compatibility</h2>
       <p>
         What testing have you done in browsers and devices? We strongly
         recommend you test on these browsers/devices:
