@@ -516,7 +516,7 @@ function App() {
         changes.
       </p>
       <p>
-        eg. The checkbox component has different states: default, enabled, disabled, erroneous, loading
+        eg. The checkbox component has different states: default, success(green), warning(orange), error(red), loading
       </p>
       <textarea
         value={aboutTab.states}
