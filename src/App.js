@@ -418,6 +418,7 @@ function App() {
   const [importedData, setImportedData] = useState(null)
   const [importFormat, setImportFormat] = useState(formats.json)
   const [exportFormat, setExportFormat] = useState(formats.json)
+  const [mockupUrl, setMockupUrl] = useState('')
 
   const editAboutTab = (name, value) =>
     setAboutTab(currentVal => ({
@@ -468,14 +469,28 @@ function App() {
     usageTab,
     props: propDefs,
     types: typesDefs,
-    compatibilityTab
+    compatibilityTab,
+    mockupUrl
   }
 
   return (
     <div className="App">
       <header>ZeroHeight Docs Generator</header>
       <br />
-      <strong> NOTE:  </strong> When in doubt consult the current <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for reference.
+      <strong> NOTE: </strong> When in doubt consult the current{' '}
+      <a href="https://atomix.hexagonmining.com/"> Atomix documentation </a> for
+      reference.
+      <hr />
+      <h2>Figma Mockup / Screenshot</h2>
+      <p>
+        Please provide a link (URL) to your mockup for the component. eg. Figma
+      </p>
+      <input
+        type="text"
+        placeholder="URL"
+        value={mockupUrl}
+        onChange={e => setMockupUrl(e.target.value)}
+      />
       <hr />
       <h2>About Tab</h2>
       <h3>(Required) What is my component?</h3>
@@ -484,7 +499,9 @@ function App() {
         for. Do not go into too much depth - just summarise it.
       </p>
       <p>
-        eg. Checkbox is a interactive box that, when selected by the user, shows that a particular feature has been enabled or a particular option chosen.
+        eg. Checkbox is a interactive box that, when selected by the user, shows
+        that a particular feature has been enabled or a particular option
+        chosen.
       </p>
       <textarea
         value={aboutTab.what}
@@ -493,19 +510,17 @@ function App() {
       <h3>(Required) Why would I use this component?</h3>
       <p>Explain why and when someone might consume your new component.</p>
       <p>
-        eg. Checkbox should be used in cases where multiple selection is the most obvious use case. In use cases where only one selection of a group is allowed, use the radio button component instead of the checkbox.
+        eg. Checkbox should be used in cases where multiple selection is the
+        most obvious use case. In use cases where only one selection of a group
+        is allowed, use the radio button component instead of the checkbox.
       </p>
       <textarea
         value={aboutTab.why}
         onChange={e => editAboutTab('why', e.target.value)}
       />
-      <h3>What are the different types?</h3>
-      <p>
-        How does the component change functionality depending on props.
-      </p>
-      <p>
-        eg. The checkbox has 2 style types, Round box and Square box.
-      </p>
+      <h3>What are the different types? (not Flow types!)</h3>
+      <p>How does the component change functionality depending on props.</p>
+      <p>eg. The checkbox has 2 style types, Round box and Square box.</p>
       <textarea
         value={aboutTab.types}
         onChange={e => editAboutTab('types', e.target.value)}
@@ -516,17 +531,17 @@ function App() {
         changes.
       </p>
       <p>
-        eg. The checkbox component has different states: default, success(green), warning(orange), error(red), loading
+        eg. The checkbox component has different states: default,
+        success(green), warning(orange), error(red), loading
       </p>
-        <ul>
-          <li>Default: The default state of the component.</li>
-          <li>Success: User selection is successful or valid.</li>
-          <li>Warning: Requires user attention.</li>
-          <li>Error: User selection is invalid.</li>
-          <li>Disabled: Component is disabled.</li>
-          <li>Loading: Component is loading.</li>
-        </ul>
-  
+      <ul>
+        <li>Default: The default state of the component.</li>
+        <li>Success: User selection is successful or valid.</li>
+        <li>Warning: Requires user attention.</li>
+        <li>Error: User selection is invalid.</li>
+        <li>Disabled: Component is disabled.</li>
+        <li>Loading: Component is loading.</li>
+      </ul>
       <textarea
         value={aboutTab.states}
         onChange={e => editAboutTab('states', e.target.value)}
@@ -614,23 +629,22 @@ const MyExampleComponent = () => {
         <li>Safari (iOS)</li>
       </ul>
       <p>
-        List only the ones you have tested and dont forget to specify the version tested.
-        An example is shown below.
+        List only the ones you have tested and dont forget to specify the
+        version tested. An example is shown below.
       </p>
       <p>
         Tested on:
         <ul>
-        <li>Chrome 22.44.10 for Windows</li>
-        <li>Safari 33.4 for macOS</li>
-        <li>Firefox 44.54 for macOS and Windows</li>
-      </ul>
+          <li>Chrome 22.44.10 for Windows</li>
+          <li>Safari 33.4 for macOS</li>
+          <li>Firefox 44.54 for macOS and Windows</li>
+        </ul>
         Compatibility:
         <ul>
-        <li>Desktop</li>
-        <li>Tablet</li>
-        <li>Mobile</li>
+          <li>Desktop</li>
+          <li>Tablet</li>
+          <li>Mobile</li>
         </ul>
-       
       </p>
       <textarea
         className="code"
@@ -677,6 +691,7 @@ const MyExampleComponent = () => {
           setPropDefs(sortAlphabetically(importedResult.props))
           setTypesDefs(sortAlphabetically(importedResult.types))
           setCompatibilityTab(importedResult.compatibilityTab)
+          setMockupUrl(importedResult.mockupUrl)
         }}
       >
         Apply
