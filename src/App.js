@@ -22,6 +22,7 @@ function PropsTable({ propDefs, editProp }) {
                     prefilledValues={propDef}
                     onSubmit={editedFields => {
                       setEditingId(null)
+                      console.debug(`edit prop "${propDef.id}"`, editedFields)
                       editProp(propDef.id, editedFields)
                     }}
                   />
@@ -439,7 +440,7 @@ function App() {
           if (propDef.id === id) {
             return newFields
           }
-          return newFields
+          return propDef
         })
       )
     )
@@ -452,7 +453,7 @@ function App() {
           if (propDef.id === id) {
             return newFields
           }
-          return newFields
+          return propDef
         })
       )
     )
@@ -593,13 +594,17 @@ const MyExampleComponent = () => {
       />
       <h2>Add Prop</h2>
       <PropEditor
-        onSubmit={fields =>
+        onSubmit={fields => {
+          fieldId++
+
+          console.log(`adding prop "${fieldId}"`, fields)
+
           setPropDefs(currentVal =>
             sortAlphabetically(
-              currentVal.concat([{ ...fields, id: fieldId++ }])
+              currentVal.concat([{ ...fields, id: fieldId }])
             )
           )
-        }
+        }}
       />
       <hr />
       <h2>Flow Types</h2>
